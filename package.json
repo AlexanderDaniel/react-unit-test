@@ -16,6 +16,6 @@
     "gulp-react": "^0.2.0",
     "gulp-mocha": "~0.4.1",
     "cheerio": "0.13.1",
-    "jsdom": "^0.10.1"
+    "jsdom": "^1.0.3"
   }
 }

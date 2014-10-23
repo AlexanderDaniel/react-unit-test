@@ -6,29 +6,25 @@ var React  = require("react/addons"),
 	TestUtils = React.addons.TestUtils;
 var CheckboxWithLabel = require("../../main/app/CheckboxWithLabel");
 var assert = require("assert");
-
-global.initDOM = function () {
-	console.log("init test dom");
-	var jsdom = require('jsdom');
-	global.window = jsdom.jsdom().createWindow('<html><body></body></html>');
-	global.document = window.document;
-    global.navigator = window.navigator;
-};
-
-global.cleanDOM = function() {
-	console.log("clean test dom");
-	delete global.window;
-	delete global.document;
-	delete global.navigator;
-};
+var jsdom = require('jsdom');
 
 describe('CheckboxWithLabel', function() {
-    beforeEach(function() {
-        initDOM();
+    beforeEach(function(done) {
+        jsdom.env(
+            '<html><body></body></html>',
+            function (errors, window) {
+                global.window = window;
+                global.document = window.document;
+                global.navigator = window.navigator;
+                done();
+            }
+        );
     });
 
     afterEach(function() {
-        cleanDOM();
+    	delete global.window;
+    	delete global.document;
+        delete global.navigator;
     });
 
     it('changes the text after click', function() {
