@@ -6,25 +6,18 @@ var React  = require("react/addons"),
 	TestUtils = React.addons.TestUtils;
 var CheckboxWithLabel = require("../../main/app/CheckboxWithLabel");
 var assert = require("assert");
-var jsdom = require('jsdom');
+var jsdom = require("jsdom").jsdom;
 
 describe('CheckboxWithLabel', function() {
-    beforeEach(function(done) {
-        jsdom.env(
-            '<html><body></body></html>',
-            function (errors, window) {
-                global.window = window;
-                global.document = window.document;
-                global.navigator = window.navigator;
-                done();
-            }
-        );
+    beforeEach(function() {
+        // https://github.com/tmpvar/jsdom#creating-a-browser-like-window-object
+        global.document = jsdom('');
+        global.window = document.parentWindow;
     });
 
     afterEach(function() {
     	delete global.window;
     	delete global.document;
-        delete global.navigator;
     });
 
     it('changes the text after click', function() {
